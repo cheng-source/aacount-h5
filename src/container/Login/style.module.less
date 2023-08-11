@@ -1,0 +1,48 @@
+.login {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(217deg,#6fb9f8,#3daaf85e,#49d3fc1a,#3fd3ff00);
+  .head {
+    width: 100%;
+    height: 200px;
+    background: url(../../assets/images/login.png) center center;
+    background-size: 120%;
+  }
+
+  .tab {
+    padding: 30px 20px 10px  20px;
+    color: rgb(92, 92, 214);
+    font-size: 13px;
+    :nth-child(1) {
+      margin-right: 10px;
+    }
+    .active {
+      font-size: 20px;
+    }
+  }
+  .form {
+    padding: 0 20px 10px  20px;
+      // 加上:global， .adm-grid-item不经过hash编码，这样才能改变组件样式，
+      // 且该样式只在.form下，没有直接加到全局中
+    :global { 
+      .adm-grid-item {
+        display: flex;
+        justify-items: center;
+        align-items: center;
+      }
+    }
+
+    
+  }
+  .operation {
+    padding: 0 20px 10px  20px;
+    .agree {
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+  }
+  
+}
+
+

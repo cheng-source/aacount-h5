@@ -4,6 +4,7 @@ import { Toast } from "antd-mobile";
 const MODE =
     import.meta.env.MODE;
 
+console.log(MODE);
 axios.defaults.baseURL == 'development' ? '/api' : 'http://localhost:7002'
 
 axios.defaults.withCredentials = true // 表示跨域请求需要凭证
