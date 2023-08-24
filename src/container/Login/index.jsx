@@ -1,19 +1,17 @@
 import React from "react";
-import s from './style.module.less';
 import { Grid, Input,Button,Checkbox, Toast } from 'antd-mobile'
-import '@/assets/font/iconfont.css'
 import loginStyle from './style.module.less'
 import Captcha from 'react18-verify-code';
 import { useState } from "react";
-import {get, post} from '@/utils/index.js'
+import { post} from '@/utils/index.js'
 
 
 const Login = () => {
   // console.log(loginStyle);
   const [username, setUsername] = useState(''),
         [password, setPassword] = useState(''),
-        [verify, setVerify] = useState('');
-
+        [verify, setVerify] = useState(''),
+        [checked, setChecked] = useState(false);
   const [type, setType] = useState('login');
 
   const handleCaptcha = (captcha) => {
@@ -30,11 +28,14 @@ const Login = () => {
       Toast.show('请输入密码');
       return
     }
-    if (!verify) {
+    if (!verify && type !== 'login') {
       Toast.show('请输入验证码')
       return
     }
-    console.log(post);
+    if (!checked) {
+      Toast.show('请同意《xxxx条款》')
+      return
+    }
     try {
       if (type === 'login') {
         const {data} = await post('api/user/login', {
@@ -42,7 +43,6 @@ const Login = () => {
           password
         });
         localStorage.setItem('token', data.token)
-        
       } else {
         const data = await post('api/user/register', {
           username,
@@ -51,12 +51,12 @@ const Login = () => {
         // console.log(data);
         Toast.show(data.msg)
       }
-
     } catch (error) {
       Toast.show('系统错误')
     }
 
   }
+
 
   return <div className={loginStyle.login}>
 
@@ -100,7 +100,7 @@ const Login = () => {
 
     <div className={loginStyle.operation}>
       <div className={loginStyle.agree}>
-      <Checkbox value=''>
+      <Checkbox value={checked} onChange={checked => setChecked(checked)}>
         <label>
         阅读并同意<a href="#">《xxxx条款》</a>
         </label>

@@ -6,7 +6,7 @@
 
 .iconfont {
     font-family: "iconfont" !important;
-    font-size: 20px;
+    font-size: 16px;
     font-style: normal;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -16,10 +16,70 @@
     content: "\e6a0";
 }
 
+.icon-GroundTransportation:before {
+    content: "\e633";
+}
+
+.icon-apparel:before {
+    content: "\e839";
+}
+
+.icon-round_transfer:before {
+    content: "\e812";
+}
+
+.icon-bonuspoints:before {
+    content: "\e62d";
+}
+
+.icon-Other:before {
+    content: "\e67f";
+}
+
+.icon-shouhuoshou--:before {
+    content: "\e62e";
+}
+
+.icon-Shopping:before {
+    content: "\e630";
+}
+
+.icon-medical:before {
+    content: "\e631";
+}
+
+.icon-food:before {
+    content: "\e662";
+}
+
+.icon-alipay:before {
+    content: "\e666";
+}
+
 .icon-password:before {
     content: "\e60a";
 }
 
+.icon-persons:before {
+    content: "\e682";
+}
+
+.icon-travel:before {
+    content: "\e60e";
+}
+
+.icon-icon_schedule_study_:before {
+    content: "\e7e1";
+}
+
+.icon-financial_bank:before {
+    content: "\e601";
+}
+
 .icon-captcha:before {
-    content: "\e633";
+    content: "\e634";
+}
+
+.icon-salary-icon:before {
+    content: "\e61b";
 }
