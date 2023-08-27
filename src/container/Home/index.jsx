@@ -6,6 +6,7 @@ import {LOAD_STATE, REFRESH_STATE, get} from '../../utils/index';
 import dayjs from "dayjs";
 import Pull from '../../components/Pull/index'
 import PopupType from '../../components/PopupType/index'
+import PopupDate from "../../components/PopupDate";
 
 const Home = function() {
   const [list, setList] = useState([]); // 账单列表
@@ -17,12 +18,12 @@ const Home = function() {
   const [refreshState, setRefreshState] = useState(REFRESH_STATE.normal)
   const typeRef = useRef(); // 账单类型 ref
   const [currentSelect, setCurrentSelect] = useState({}); // 当前筛选类型
-  const currentTime = dayjs().format('YYYY-MM')
+  const monthRef = useRef(); //月份
+  const [currentTime,setCurrentTime] = useState(dayjs().format('YYYY-MM'));
 
   useEffect(() => {
     getBillList();
-  }, [page, currentSelect])
-
+  }, [page, currentSelect,currentTime])
 
   const loadingData = () => {
     if (page < totalPage) {
@@ -72,6 +73,17 @@ const Home = function() {
     setCurrentSelect(item)
   }
 
+  const toggleMonth = () => {
+    monthRef.current && monthRef.current.show();
+  }
+
+  const selectMonth = (item) => {
+    setRefreshState(REFRESH_STATE.loading);
+    // 触发刷新列表，将分页重制为 1
+    setPage(1);
+    setCurrentTime(item)
+  }
+
 
   return <div className={homeStyle.home}>
     <div className={homeStyle.header}>
@@ -83,7 +95,7 @@ const Home = function() {
         <div className={homeStyle.left} onClick={toggle}>
           <span>{ currentSelect.name || '全部类型' }</span><DownOutline />
         </div>
-        <div className={homeStyle.right}>
+        <div className={homeStyle.right} onClick={toggleMonth}>
           <span>2023-08-11</span><DownOutline />
         </div>
       </div>
@@ -96,7 +108,7 @@ const Home = function() {
     
     </div>
     <PopupType ref={typeRef} onSelect={select} />
-    
+    <PopupDate ref={monthRef} onSelect={selectMonth}></PopupDate>
   </div>
 }
 
