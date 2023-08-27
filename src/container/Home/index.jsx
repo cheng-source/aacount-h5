@@ -1,10 +1,11 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useRef} from "react";
 import homeStyle from './style.module.less';
 import { DownOutline } from 'antd-mobile-icons';
 import BillItem from "../../components/BillItem";
 import {LOAD_STATE, REFRESH_STATE, get} from '../../utils/index';
 import dayjs from "dayjs";
 import Pull from '../../components/Pull/index'
+import PopupType from '../../components/PopupType/index'
 
 const Home = function() {
   const [list, setList] = useState([]); // 账单列表
@@ -14,11 +15,13 @@ const Home = function() {
   const [totalIncome, setTotalIncome] = useState();
   const [loadState, setLoadingState] = useState(LOAD_STATE.normal);
   const [refreshState, setRefreshState] = useState(REFRESH_STATE.normal)
+  const typeRef = useRef(); // 账单类型 ref
+  const [currentSelect, setCurrentSelect] = useState({}); // 当前筛选类型
   const currentTime = dayjs().format('YYYY-MM')
 
   useEffect(() => {
     getBillList();
-  }, [page])
+  }, [page, currentSelect])
 
 
   const loadingData = () => {
@@ -40,7 +43,7 @@ const Home = function() {
 
   const getBillList = async () => {
     try {
-      const {data} = await get(`/api/bill/list?page=${page}&page_size=5&date=${currentTime}`);
+      const {data} = await get(`/api/bill/list?page=${page}&page_size=5&date=${currentTime}&type_id=${currentSelect.id || 'all'}`);
       if (page === 1) {
         setList(data.list);
         setRefreshState(REFRESH_STATE.success);
@@ -54,8 +57,21 @@ const Home = function() {
     } catch (error) {
       setRefreshState(REFRESH_STATE.fail);
     }
-
   }
+
+    // 添加账单弹窗
+    const toggle = () => {
+      typeRef.current && typeRef.current.show()
+    };
+
+      // 筛选类型
+  const select = (item) => {
+    setRefreshState(REFRESH_STATE.loading);
+    // 触发刷新列表，将分页重制为 1
+    setPage(1);
+    setCurrentSelect(item)
+  }
+
 
   return <div className={homeStyle.home}>
     <div className={homeStyle.header}>
@@ -64,8 +80,8 @@ const Home = function() {
         <span className={homeStyle.income}>总收入：<b>{totalIncome}</b></span>
       </div>
       <div className={homeStyle.typeSelect}>
-        <div className={homeStyle.left}>
-          <span>类型</span><DownOutline />
+        <div className={homeStyle.left} onClick={toggle}>
+          <span>{ currentSelect.name || '全部类型' }</span><DownOutline />
         </div>
         <div className={homeStyle.right}>
           <span>2023-08-11</span><DownOutline />
@@ -79,6 +95,7 @@ const Home = function() {
     </Pull>
     
     </div>
+    <PopupType ref={typeRef} onSelect={select} />
     
   </div>
 }
