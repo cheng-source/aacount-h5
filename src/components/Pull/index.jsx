@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import {SpinLoading,DotLoading,ProgressCircle  } from 'antd-mobile'
 import { useRef } from "react";
-import { LOAD_STATE, REFRESH_STATE } from "../../utils";
+import { LOAD_STATE, REFRESH_STATE, getScrollParent, throttle } from "../../utils";
 import s from './style.module.less'
 
 const Pull = function(props) {
@@ -10,33 +10,19 @@ const Pull = function(props) {
   const wrapRef = useRef();
   // const [loading, setLoading] = useState(false);
   const [refreshState, setRefreshState] = useState(props.refreshState);
-  function isElement(node) {
-    const ELEMENT_NODE_TYPE = 1;
-    return node.tagName !== 'HTML' && node.tagName !== 'BODY' && node.nodeType === ELEMENT_NODE_TYPE;
-  }
-  // 获取指定元素的可滚动父元素
-  const getScrollParent = (node) => {
-    while(isElement(node)) {
-      const { overflowY } = window.getComputedStyle(node);
-      if (/scroll|auto/i.test(overflowY)) {
-        return node;
-      }
-      node = node.parentNode;
-    }
-  }
-
 
   const setScrollParent = () => {
     wrapRef.current = getScrollParent(pullRef.current);
   }
 
-  const onScroll = () => {
+  // 节流滚动
+  const onScroll = throttle( () => {
     const {scrollHeight, clientHeight} = wrapRef.current;
     if (clientHeight + wrapRef.current.scrollTop + 20 > scrollHeight) {
       // setLoading(true);
       loadingData();
     }
-  }
+  },500)
 
   useEffect(() => {
     setRefreshState(props.refreshState);
@@ -64,16 +50,20 @@ const Pull = function(props) {
     wrapRef.current.style.transition = 'transform 0s';
   }
 
-  const touchmove = (e) => {
+  const touchmove = throttle( (e) => {
     transitionHeight = e.touches[0].pageY - startPos;
-    setRefreshState(REFRESH_STATE.pull);
-  }
+    if (transitionHeight > 0 && transitionHeight < 30 && wrapRef.current.scrollTop === 0) {
+      setRefreshState(REFRESH_STATE.pull);
+    }
+    
+  },500)
 
   const touchend = () => {
-    refreshData();
-    wrapRef.current.style.transition = 'transform 0.5s ease 1s';
-    wrapRef.current.style.transform = 'translateY(0px)';
-
+    if (wrapRef.current.scrollTop === 0) {
+      refreshData();
+      wrapRef.current.style.transition = 'transform 0.5s ease 1s';
+      wrapRef.current.style.transform = 'translateY(0px)';
+    }
   }
 
   const refreshRender = () => {
