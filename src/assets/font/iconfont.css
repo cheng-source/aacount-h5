@@ -1,7 +1,7 @@
 @font-face {
     font-family: "iconfont";
     /* Project id  */
-    src: url('./iconfont.ttf') format('truetype');
+    src: url('iconfont.ttf') format('truetype');
 }
 
 .iconfont {
@@ -38,6 +38,10 @@
 
 .icon-shouhuoshou--:before {
     content: "\e62e";
+}
+
+.icon-yashuayagao:before {
+    content: "\e674";
 }
 
 .icon-Shopping:before {

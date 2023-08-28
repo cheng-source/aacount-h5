@@ -1,12 +1,13 @@
 import React, {useEffect, useState, useRef} from "react";
 import homeStyle from './style.module.less';
-import { DownOutline } from 'antd-mobile-icons';
+import { DownOutline ,AddOutline } from 'antd-mobile-icons';
 import BillItem from "../../components/BillItem";
 import {LOAD_STATE, REFRESH_STATE, get} from '../../utils/index';
 import dayjs from "dayjs";
 import Pull from '../../components/Pull/index'
 import PopupType from '../../components/PopupType/index'
 import PopupDate from "../../components/PopupDate";
+import PopupAddBill from "../../components/PopupAddBill";
 
 const Home = function() {
   const [list, setList] = useState([]); // 账单列表
@@ -20,6 +21,7 @@ const Home = function() {
   const [currentSelect, setCurrentSelect] = useState({}); // 当前筛选类型
   const monthRef = useRef(); //月份
   const [currentTime,setCurrentTime] = useState(dayjs().format('YYYY-MM'));
+  const addRef = useRef();
 
   useEffect(() => {
     getBillList();
@@ -84,6 +86,10 @@ const Home = function() {
     setCurrentTime(item)
   }
 
+  const addToggle = () => {
+    addRef.current && addRef.current.show();
+  }
+
 
   return <div className={homeStyle.home}>
     <div className={homeStyle.header}>
@@ -96,7 +102,7 @@ const Home = function() {
           <span>{ currentSelect.name || '全部类型' }</span><DownOutline />
         </div>
         <div className={homeStyle.right} onClick={toggleMonth}>
-          <span>2023-08-11</span><DownOutline />
+          <span>{currentTime}</span><DownOutline />
         </div>
       </div>
     </div>
@@ -107,8 +113,10 @@ const Home = function() {
     </Pull>
     
     </div>
+    <div className={homeStyle.add} onClick={addToggle}><AddOutline fontSize={24} /></div>
     <PopupType ref={typeRef} onSelect={select} />
-    <PopupDate ref={monthRef} onSelect={selectMonth}></PopupDate>
+    <PopupDate ref={monthRef} onSelect={selectMonth} mode="month"></PopupDate>
+    <PopupAddBill ref={addRef} onReload={refreshData}></PopupAddBill>
   </div>
 }
 

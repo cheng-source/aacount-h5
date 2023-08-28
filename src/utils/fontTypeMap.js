@@ -6,22 +6,22 @@ export default {
         icon: 'apparel'
     },
     3: {
-        icon: 'Ground Transportation'
+        icon: 'GroundTransportation'
     },
     4: {
-        icon: '牙刷牙膏'
+        icon: 'yashuayagao'
     },
     5: {
         icon: 'Shopping'
     },
     6: {
-        icon: '学习'
+        icon: 'icon_schedule_study_'
     },
     7: {
         icon: 'medical'
     },
     8: {
-        icon: '旅行'
+        icon: 'travel'
     },
     9: {
         icon: 'persons'
@@ -45,6 +45,6 @@ export default {
         icon: 'tuikuang'
     },
     16: {
-        icon: '收货 收'
+        icon: 'shouhuoshou'
     }
 }
