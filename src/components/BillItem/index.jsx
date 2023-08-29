@@ -5,11 +5,13 @@ import fontTypeMap from "../../utils/fontTypeMap"
 import { useState } from "react"
 import { useEffect } from "react"
 import dayjs from "dayjs"
+import { useNavigate } from "react-router-dom"
 
 const BillItem = function(props) {
   const {bill} = props;
   const [expenseTotal, setExpenseTotal] =  useState(0),
         [incomeTotal, setIncomeTotal] = useState(0);
+  const navigate = useNavigate()
 
   useEffect(() => {
     const incomeT = bill.bills.filter(item => item.pay_type === 2).reduce((curr, item) => {
@@ -39,7 +41,7 @@ const BillItem = function(props) {
           </div>
         </>}>
         {bill.bills.map((item, index) => {
-        return <div  key={index}>
+        return <div  key={index}  onClick={() => navigate(`detail?id=${item.id}`)}>
         {index !== 0 ? <Divider /> : null}
         <div className={billStyle.item}>
            <div className={billStyle.left}>

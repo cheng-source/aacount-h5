@@ -6,10 +6,11 @@ import s from './style.module.less'
 import PopupDate from "../PopupDate";
 import { DownOutline } from 'antd-mobile-icons';
 import dayjs from "dayjs";
+import PropTypes from 'prop-types';
 import {get, post} from './../../utils/index.js';
 import fontTypeMap from "../../utils/fontTypeMap";
 
-const PopupAddBill = forwardRef(function PopupAddBill({onReload}, ref) {
+const PopupAddBill = forwardRef(function PopupAddBill({detail = {}, onReload}, ref) {
   const [show, setShow] = useState(false);
   const [payType, setPayType] = useState('expense');
   const [time, setTime] = useState(new Date())
@@ -20,6 +21,21 @@ const PopupAddBill = forwardRef(function PopupAddBill({onReload}, ref) {
   const [currentType, setCurrentType] = useState({});
   const [remark, setRemark] = useState('');
   const [showRemark, setShowRemark] = useState(false);
+
+  const id = detail.id;
+
+  useEffect(() => {
+    if (detail.id) {
+      setPayType(detail.pay_type === 1 ? 'expense' : 'income');
+      setCurrentType({
+        id: detail.type_id,
+        name: detail.type_name
+      });
+      setTime(dayjs(Number(detail.date)));
+      setRemark(detail.remark);
+      setAmount(detail.amount);
+    }
+  }, [detail]);
 
   useEffect(() => {
     (async () => {
@@ -84,18 +100,31 @@ const PopupAddBill = forwardRef(function PopupAddBill({onReload}, ref) {
       pay_type: payType === 'expense' ? 1 : 2,
       remark: remark || ''
     }
-    await post('/api/bill/add', params);
-    setAmount('');
-    setPayType('expense');
-    setCurrentType(expense[0]);
-    setTime(new Date());
-    setRemark('');
-    Toast.show({
-      icon: 'success',
-      content: '添加成功'
-    });
+    if (id) {
+      params.id = id;
+      await post('/api/bill/update', params);
+      Toast.show({
+        icon: 'success',
+        content: '修改成功'
+      });
+    } else {
+      await post('/api/bill/add', params);
+      setAmount('');
+      setPayType('expense');
+      setCurrentType(expense[0]);
+      setTime(new Date());
+      setRemark('');
+      Toast.show({
+        icon: 'success',
+        content: '添加成功'
+      });
+    }
+
     setShow(false);
-    if (onReload) onReload();
+    if (onReload) {
+      console.log('reload');
+      onReload();
+    } 
   }
 
   return <Popup
@@ -163,5 +192,10 @@ const PopupAddBill = forwardRef(function PopupAddBill({onReload}, ref) {
     </div>
   </Popup>
 })
+
+PopupAddBill.propTypes = {
+  detail: PropTypes.object,
+  onReload: PropTypes.func
+}
 
 export default PopupAddBill

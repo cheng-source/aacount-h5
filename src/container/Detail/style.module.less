@@ -1,0 +1,87 @@
+.detail {
+  // background-color: #fff;  
+  text-align: center;
+  .card {
+    // display: inline-block;
+    margin: 10px auto;
+    width: 85%;
+    background-color: #fff;
+    padding: 0 12px;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .type {
+      padding: 24px 0 12px 0;
+      span:nth-of-type(1) {
+        display: inline-block;
+        width: 22px;
+        height: 22px;
+        color: #fff;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 24px;
+        margin-right: 8px;
+        background-color: #007fff;
+      }
+    }
+
+    .amount {
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 24px;
+    }
+
+    .info {
+      width: 100%;
+      text-align: left;
+      font-size: 14px;
+
+      .time {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        margin-bottom: 12px;
+        span:nth-of-type(1) {
+          flex: 3;
+          color: rgba(0,0,0,0.5)
+        }
+        span:nth-of-type(2) {
+          flex: 9;
+        }
+      }
+      .remark {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        margin-bottom: 12px;
+        span:nth-of-type(1) {
+          flex: 3;
+          color: rgba(0,0,0,0.5)
+        }
+        span:nth-of-type(2) {
+          flex: 9;
+          color: rgba(0,0,0,0.9)
+        }
+      }
+    }
+
+    .operation {
+      width: 100%;
+      height: 50px;
+      display: flex;
+      justify-content: center;
+      font-size: 16px;
+      &>span {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex: 1;
+        height: 100%;
+      }
+      &>span:nth-of-type(1) {
+        color: red;
+      }
+    }
+  }
+}

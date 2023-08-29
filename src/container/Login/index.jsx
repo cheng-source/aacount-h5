@@ -4,10 +4,12 @@ import loginStyle from './style.module.less'
 import Captcha from 'react18-verify-code';
 import { useState } from "react";
 import { post} from '@/utils/index.js'
+import { useNavigate } from "react-router-dom";
 
 
 const Login = () => {
   // console.log(loginStyle);
+  const navigate = useNavigate()
   const [username, setUsername] = useState(''),
         [password, setPassword] = useState(''),
         [verify, setVerify] = useState(''),
@@ -37,19 +39,22 @@ const Login = () => {
       return
     }
     try {
+      let res = {};
       if (type === 'login') {
-        const {data} = await post('api/user/login', {
+        res = await post('api/user/login', {
           username,
           password
         });
-        localStorage.setItem('token', data.token)
+        console.log(res);
+        localStorage.setItem('token', res.data.token);
+        navigate('/')
       } else {
-        const data = await post('api/user/register', {
+        res = await post('api/user/register', {
           username,
           password
         })
-        // console.log(data);
-        Toast.show(data.msg)
+        Toast.show('注册成功')
+        setType('login')
       }
     } catch (error) {
       Toast.show('系统错误')

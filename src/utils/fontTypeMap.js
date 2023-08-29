@@ -33,7 +33,7 @@ export default {
         icon: 'salary-icon'
     },
     12: {
-        icon: 'bonus points'
+        icon: 'bonuspoints'
     },
     13: {
         icon: 'round_transfer'
