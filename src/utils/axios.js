@@ -18,6 +18,7 @@ axios.interceptors.response.use(res => {
         return Promise.reject(res)
     }
     if (res.data.code != 200) {
+        console.log(res.data.msg);
         if (res.data.msg) Toast.show(res.data.msg)
         if (res.data.code == 401) {
             window.location.href = '/login'

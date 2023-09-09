@@ -1,0 +1,143 @@
+.data{
+  min-height: 100%;
+  background-color: #f5f5f5;
+  .total {
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .time {
+      background-color: #f5f5f5;
+      margin-top: 20px;
+      width: 95px;
+      text-align: center;
+      padding: 6px;
+      border-radius: 4px;
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 14px;
+      span:nth-of-type(1)::after {
+        position: absolute;
+        content: '';
+        top: 9px;
+        bottom: 8px;
+        right: 29px;
+        width: 1px;
+        background-color: rgba(0, 0, 0, .5);
+      }
+    }
+    .title {
+      color: #007fff;
+      margin: 8px 0;
+      font-size: 14px;
+      font-weight: 500;
+    }
+    .expense {
+      font-size: 24px;
+      color: #007fff;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+    .income {
+      color: rgba(0, 0, 0, .5);
+      font-weight: 500;
+    }
+  }
+
+  .structure {
+    padding: 0 16px;
+    background-color: #fff;
+    margin-bottom: 10px;
+    .head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      .title {
+        font-size: 16px;
+        color: rgba(0, 0, 0, .9);
+      }
+      .tab {
+        span {
+          display: inline-block;
+          width: 40px;
+          height: 24px;
+          background-color: #f5f5f5;
+          text-align: center;
+          line-height: 24px;
+          margin-left: 6px;
+          border-radius: 4px;
+        }
+
+        .expense{
+          &.active {
+            background-color: rgba(0, 127, 255, 0.2);
+            color: #007fff;
+          }
+        }
+
+        .income {
+          &.active {
+            background-color: rgba(236, 190, 37, 0.2);
+            color: rgb(236, 190, 37);
+          }
+        }
+      }
+    }
+
+    .content {
+      .item {
+        display: flex;
+        align-items: center;
+        height: 50px;
+        .left {
+          font-size: 13px;
+          flex: 4;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-right: 10px;
+          .type {
+            display: flex;
+            .icon {
+              width: 30px;
+              height: 30px;
+              text-align: center;
+              line-height: 30px;
+              border-radius: 50%;
+              color: #fff;
+            }
+            .name {
+              width: 30px;
+              height: 30px;
+              text-align: center;
+              line-height: 30px;
+            }
+            .expense {
+              background-color: #007fff;
+            }
+            .income {
+              background-color: rgb(236, 190, 37);
+            }
+          }
+          .money {
+            font-weight: 600;
+          }
+
+        }
+        .right {
+          flex: 8;
+          :global {
+            .adm-progress-bar-text {
+              color: rgba(0, 0, 0, .9);
+              font-size: 14px;
+              font-weight: 600;
+            }
+          }
+        }
+      }
+    }
+  }
+}

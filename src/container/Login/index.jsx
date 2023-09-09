@@ -47,7 +47,9 @@ const Login = () => {
         });
         console.log(res);
         localStorage.setItem('token', res.data.token);
-        navigate('/')
+        // 之所以用 window.location.href 的原因是，utils/axios.js 内部需要再次被执行，才能通过 localStorage.getItem 拿到最新的 token。
+        // 如果只是用 navigateTo 跳转页面的话，页面是不会被刷新，那么 axios.js 的 token 就无法设置。
+        window.location.href = '/'
       } else {
         res = await post('api/user/register', {
           username,

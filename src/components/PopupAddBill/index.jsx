@@ -31,12 +31,11 @@ const PopupAddBill = forwardRef(function PopupAddBill({detail = {}, onReload}, r
         id: detail.type_id,
         name: detail.type_name
       });
-      setTime(dayjs(Number(detail.date)));
+      setTime(dayjs(Number(detail.date)).format('YYYY-MM'));
       setRemark(detail.remark);
       setAmount(detail.amount);
     }
   }, [detail]);
-
   useEffect(() => {
     (async () => {
     const { data: { list } } = await get('/api/type/list')
@@ -102,6 +101,7 @@ const PopupAddBill = forwardRef(function PopupAddBill({detail = {}, onReload}, r
     }
     if (id) {
       params.id = id;
+      
       await post('/api/bill/update', params);
       Toast.show({
         icon: 'success',
@@ -122,7 +122,6 @@ const PopupAddBill = forwardRef(function PopupAddBill({detail = {}, onReload}, r
 
     setShow(false);
     if (onReload) {
-      console.log('reload');
       onReload();
     } 
   }

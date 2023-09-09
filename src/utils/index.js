@@ -1,4 +1,7 @@
 import axios from "./axios";
+import { baseUrl } from "../config";
+const MODE =
+    import.meta.env.MODE
 
 export const get = axios.get;
 
@@ -52,5 +55,14 @@ export const throttle = function(func, delay) {
                 func.apply(context, args);
             }, remainTime);
         }
+    }
+}
+
+export const imgUrlTrans = (url) => {
+    if (url && url.startsWith('http')) {
+        return url
+    } else {
+        url = `${MODE == 'development' ? 'http://localhost:7001' : baseUrl}${url}`
+        return url
     }
 }

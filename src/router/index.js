@@ -3,6 +3,8 @@ import Data from '@/container/Data'
 import User from '@/container/User'
 import Login from '@/container/Login';
 import Detail from '@/container/Detail';
+import UserInfo from '@/container/UserInfo/index.jsx';
+import Account from '../container/Account';
 
 const routes = [{
         path: '/',
@@ -22,6 +24,14 @@ const routes = [{
     {
         path: '/detail',
         component: Detail
+    },
+    {
+        path: '/userInfo',
+        component: UserInfo
+    },
+    {
+        path: '/account',
+        component: Account
     }
 
 ];

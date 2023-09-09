@@ -61,36 +61,6 @@ const BillItem = function(props) {
         </div> 
         })}
       </Card>
-
-        
-        {/* // <div key={index} className={billStyle.item}>
-        //   <div className={billStyle.left}>
-        //     <div className={billStyle.type}>
-        //       <span className="iconfont icon-mobile"></span>
-        //       {item.type_name}
-        //     </div>
-        //     <div>
-        //       <span className="time">13:52</span>
-        //     </div>
-        //   </div>
-        //   <div className="right">
-        //   {`${item.pay_type === 1 ? '-' : '+'}${item.amount}`}
-        //   </div>
-        // </div>
-        // <Grid key={index} columns={9} gap={20}>
-        //     <Grid.Item span={7}>
-        //     <span className="iconfont icon-mobile"></span>
-        //     {item.type_name}
-        //     </Grid.Item>
-        //     <Grid.Item span={2}>
-        //     {`${item.pay_type === 1 ? '-' : '+'}${item.amount}`}
-        //     </Grid.Item>
-        // </Grid> */}
-
-
-      
-      
-      
     </div>
 }
 

@@ -27,6 +27,7 @@ const Detail = () => {
 
   const getDetail = async () => {
     const result = await get(`/api/bill/detail?id=${id}`);
+    console.log(result);
     setDetail(result.data)
   }
 
